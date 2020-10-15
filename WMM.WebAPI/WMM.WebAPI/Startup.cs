@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WMM.WebAPI.Repository;
+using WMM.WebAPI.Services;
 
 namespace WMM.WebAPI
 {
@@ -26,6 +28,10 @@ namespace WMM.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var repository = new TestRepository();
+            var transactionService = new TransactionService(repository);
+            services.AddSingleton<TransactionService>(transactionService);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
